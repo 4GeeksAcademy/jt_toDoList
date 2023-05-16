@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import Button from "./button";
 
 const Home = () => {
 
@@ -8,21 +9,32 @@ const Home = () => {
 	return (
 		<>	
 			<div className="row justify-content-center">
-				<div className="col-12">
-					<h1>Lista de tareas</h1>
+				<div className="col-6 mt-5 text-center display-4 text-success">
+					<h1>To do List</h1>
 				</div>
+
+				<figure className="text-center mb-5">
+					<blockquote className="blockquote">
+						<p>“If it weren’t for the last minute, nothing would get done”</p>
+					</blockquote>
+					<figcaption className="blockquote-footer">
+						<cite title="Source Title">Rita Mae Brown</cite>
+					</figcaption>
+					</figure>
+
 			</div>
 			<div className="row justify-content-center">
-				<div className="col-md-6">
+				<div className="col-sm-10 col-md-8 col-lg-5">
 					<ul className="list-group">
-						<li className="list-group-item d-flex justify-content-between align-items-center">
+						<li className="list-group-item d-flex justify-content-between align-items-center shadow-lg mx-4">
 							<input
 								type="text"
 								onChange={(e) => setInputValue(e.target.value)}
 								value={inputValue}
 								onKeyDown={(e) => {
 									if (e.key === 'Enter') {
-									  setTarea([inputValue].concat(tarea));
+										if (inputValue.trim() !== "")
+										setTarea([inputValue].concat(tarea));
 									  setInputValue('');
 									}
 								  }}
@@ -30,13 +42,19 @@ const Home = () => {
 							<span class="badge bg-success">Press Intro</span>
 						</li>
 						{tarea.map((toDo, index) => (
-						<li className="list-group-item d-flex justify-content-between align-items-center">
+						<li className="list-group-item d-flex justify-content-between align-items-center shadow-lg  mx-4">
     						{toDo}
-							<button class="btn btn-outline-danger btn-sm" type="button" id="button-addon2" onClick={()=> setTarea(tarea.filter((t, currentIndex) => index != currentIndex ))}><i class="fas fa-trash"></i></button> 
+							<button className="btn btn-outline-danger btn-sm" type="button" onClick={()=> setTarea(tarea.filter((t, currentIndex) => index != currentIndex ))}><i className="fas fa-trash"></i></button> 
 						</li>
 						))}
 					</ul>
 				</div>
+			</div>
+
+			<div className="row my-5">
+				<div className="fixed-bottom p-4 text-danger text-center">
+        			Made with ❤️ by <b>Julia</b>
+      			</div>
 			</div>
 		</>
 	);
