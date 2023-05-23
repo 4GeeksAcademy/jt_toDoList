@@ -1,10 +1,22 @@
-import React, {useState} from "react";
-import Button from "./button";
+import React, {useState, useEffect} from "react";
 
 const Home = () => {
 
 	const [inputValue, setInputValue] = useState("")
 	const [ tarea, setTarea] = useState([])
+	const [ placeholder, setPlaceholder] = useState ("")
+
+	const handleClick = (index) => {
+		setTarea(tarea.filter((t, currentIndex) => currentIndex !== index));
+	};
+
+	useEffect(() => {
+		if (tarea.length === 0) {
+		  setPlaceholder("There are no to dos, please enter a new one!");
+		} else {
+			setPlaceholder("Write your new task!");
+		}
+	  }, [tarea]);
 
 	return (
 		<>	
@@ -35,19 +47,20 @@ const Home = () => {
 									if (e.key === 'Enter') {
 										if (inputValue.trim() !== "")
 										setTarea([inputValue].concat(tarea));
-									  setInputValue('');
+									 	setInputValue('');
 									}
 								  }}
-								placeholder="Write your new task!"></input>
+								placeholder={placeholder}></input>
 							<span class="badge bg-success">Press Intro</span>
 						</li>
 						{tarea.map((toDo, index) => (
 						<li className="list-group-item d-flex justify-content-between align-items-center shadow-lg  mx-4">
     						{toDo}
-							<button className="btn btn-outline-danger btn-sm" type="button" onClick={()=> setTarea(tarea.filter((t, currentIndex) => index != currentIndex ))}><i className="fas fa-trash"></i></button> 
+							<button className="btn btn-outline-danger btn-sm" type="button" onClick={() => handleClick(index)}><i className="fas fa-trash"></i></button> 
 						</li>
 						))}
 					</ul>
+					<h1 className="fs-6 m-4 fw-light">Tareas pendientes: {tarea.length} </h1>
 				</div>
 			</div>
 
